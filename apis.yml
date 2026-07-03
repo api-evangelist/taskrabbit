@@ -1,0 +1,175 @@
+aid: taskrabbit
+url: https://raw.githubusercontent.com/api-evangelist/taskrabbit/refs/heads/main/apis.yml
+name: TaskRabbit
+kind: company
+description: TaskRabbit is a gig-economy marketplace connecting customers with local,
+  vetted Taskers for furniture assembly, handyman work, moving, and other home
+  services. Ingka Group (IKEA) acquired TaskRabbit in 2017 and has since deepened
+  the integration, including in-store and checkout-time TaskRabbit assembly booking
+  at IKEA. TaskRabbit's original developer story dates to February 2012, when it
+  ran an open API that let third-party to-do apps (Astrid, Producteev) create tasks
+  on a user's behalf; that early open, self-serve API is long gone. In November
+  2024 TaskRabbit acquired on-demand delivery company Dolly and rebranded its
+  service as TaskRabbit Delivery. Today TaskRabbit operates one gated Partner API
+  program (developer.taskrabbit.com) spanning two live surfaces - Delivery
+  (built on Dolly's pre-existing Partner API, "PAPI") and a newer, 2025-12-versioned
+  Home Services Partner Platform (Estimate, Availability, Bid, Book) that lets
+  approved partners quote, book, and manage TaskRabbit projects, including IKEA-style
+  furniture assembly, inside their own apps. Access requires partner approval
+  (TaskRabbit reviews requests within about two business days) and Auth0 OAuth2
+  client-credentials (machine-to-machine) tokens; there is no public self-serve
+  signup and no published API price list, since commercial terms are negotiated
+  per partner. End-customer pricing on TaskRabbit itself follows a standard
+  Service Fee plus Trust & Support Fee structure layered on top of each Tasker's
+  hourly rate.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Gig Economy
+- Handyman
+- Home Services
+- Marketplace
+- Delivery
+- Moving
+- Partner API
+- IKEA
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: taskrabbit:taskrabbit-home-services-estimate-api
+  name: TaskRabbit Home Services Estimate API
+  tags:
+  - Estimates
+  - Pricing
+  - Home Services
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.taskrabbit.com/docs/project-estimate
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  properties:
+  - url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+    type: Documentation
+  - url: https://developer.taskrabbit.com/reference/projectestimate
+    type: APIReference
+  - url: openapi/taskrabbit-openapi.yml
+    type: OpenAPI
+  description: POST /projects/estimate is the first call in the Estimate, Availability,
+    Bid, Book booking sequence - it returns service eligibility and a price estimate
+    for a postal code or full address plus one or more requested services. Requires
+    an OAuth2 bearer token and a partner-issued API subdomain; available in Sandbox
+    and Production.
+- aid: taskrabbit:taskrabbit-home-services-availability-api
+  name: TaskRabbit Home Services Availability API
+  tags:
+  - Availability
+  - Scheduling
+  - Home Services
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.taskrabbit.com/docs/checking-availability
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  properties:
+  - url: https://developer.taskrabbit.com/docs/checking-availability
+    type: Documentation
+  - url: https://developer.taskrabbit.com/reference/projectavailability
+    type: APIReference
+  - url: openapi/taskrabbit-openapi.yml
+    type: OpenAPI
+  description: POST /projects/availability returns real-time bookable time windows
+    and estimated pricing for one or more services at a location, optionally
+    bounded by a date_from/date_to range, so a partner checkout flow can show
+    live appointment slots.
+- aid: taskrabbit:taskrabbit-home-services-booking-api
+  name: TaskRabbit Home Services Booking API
+  tags:
+  - Bookings
+  - Projects
+  - Webhooks
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.taskrabbit.com/docs/booking-a-project
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  properties:
+  - url: https://developer.taskrabbit.com/docs/creating-a-bid
+    type: Documentation
+  - url: https://developer.taskrabbit.com/reference/projectbid
+    type: APIReference
+  - url: https://developer.taskrabbit.com/reference/projectbook
+    type: APIReference
+  - url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+    type: APIReference
+  - url: https://developer.taskrabbit.com/reference/cancelbookedproject
+    type: APIReference
+  - url: https://developer.taskrabbit.com/docs/webhooks-1
+    type: Documentation
+  - url: openapi/taskrabbit-openapi.yml
+    type: OpenAPI
+  description: Covers the rest of the booking lifecycle - POST /projects/bid locks
+    a formal quote and Project UUID against a chosen time window, POST /projects/book
+    completes the booking and charges the customer, GET /projects/{project_uuid}
+    and POST /projects/list check status, POST /projects/{project_uuid}/cancel
+    cancels with an enumerated reason, and a reschedule-availability/reschedule
+    pair moves a booked project. project.completed, project.canceled, and
+    project.rescheduled events are pushed as Svix-signed HTTP POST webhooks.
+- aid: taskrabbit:taskrabbit-home-services-catalog-api
+  name: TaskRabbit Home Services Catalog API
+  tags:
+  - Catalog
+  - Services
+  - Categories
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.taskrabbit.com/docs/get-service-catalog
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  properties:
+  - url: https://developer.taskrabbit.com/docs/get-service-catalog
+    type: Documentation
+  - url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+    type: APIReference
+  - url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
+    type: APIReference
+  - url: openapi/taskrabbit-openapi.yml
+    type: OpenAPI
+  description: GET /brands/{brand_uuid}/services returns a partner brand's full
+    configured service catalog - names, pricing, and requirements - with optional
+    pricing inclusion and locale filters, keeping a partner's product pages in
+    sync with what TaskRabbit actually offers. PUT updates a service's
+    partner-defined external identifier for catalog reconciliation.
+- aid: taskrabbit:taskrabbit-delivery-api
+  name: TaskRabbit Delivery API (Dolly)
+  tags:
+  - Delivery
+  - Moving
+  - Logistics
+  - Dolly
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.taskrabbit.com/docs/overview
+  baseURL: https://papi.dolly.com/v1
+  properties:
+  - url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
+    type: Documentation
+  - url: https://developer.taskrabbit.com/docs/scheduling
+    type: Documentation
+  - url: https://developer.taskrabbit.com/docs/webhooks
+    type: Documentation
+  - url: https://developer.taskrabbit.com/reference/get-partner-information
+    type: APIReference
+  - url: openapi/taskrabbit-openapi.yml
+    type: OpenAPI
+  description: TaskRabbit acquired on-demand moving/delivery company Dolly in
+    November 2024 and rebranded its service as TaskRabbit Delivery; the pre-existing
+    Dolly Partner API (PAPI, base https://papi.dolly.com, sandbox
+    https://papi.sandbox.dolly.com) continues to power it. POST /v1/deliveries
+    quotes and creates a delivery, with companion endpoints to fetch delivery
+    info, add/update units, add a tip, cancel, build multi-stop routes, and check
+    partner identity (GET /v1/me) or service health (ping). COURIER_REQUESTED
+    through DELIVERED lifecycle events are pushed as HTTP POST webhooks from an
+    allowlisted set of source IPs.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/taskrabbit
+- type: Website
+  url: https://www.taskrabbit.com
+- type: Documentation
+  url: https://developer.taskrabbit.com/
+- type: Plans
+  url: plans/taskrabbit-plans-pricing.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

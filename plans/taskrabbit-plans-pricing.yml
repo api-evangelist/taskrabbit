@@ -1,0 +1,111 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: TaskRabbit
+providerId: taskrabbit
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Gig Economy
+- Handyman
+- Home Services
+- Marketplace
+- Plans
+description: >-
+  TaskRabbit does not publish a price list for its Partner API - access is
+  approval-gated and commercial terms (if any beyond the standard developer
+  agreement) are negotiated directly with a TaskRabbit partnership manager
+  during onboarding. What TaskRabbit does publish is the end-customer pricing
+  model that every task, whether booked through taskrabbit.com, the app, an
+  IKEA checkout flow, or a Partner API integration, is charged under: each
+  Tasker sets their own hourly rate, and TaskRabbit adds a Service Fee
+  calculated as a percentage of the hourly rate for the task (applied per
+  hour worked, excluding reimbursements) plus, in most states, a Trust &
+  Support Fee. California and Massachusetts invoices show only the Service
+  Fee due to state law changes. This file documents that consumer fee
+  structure rather than a metered API price list, since no such list exists.
+notes: >-
+  Percentages and flat-fee amounts change by market and are not fully itemized
+  in TaskRabbit's own support documentation (which describes the Service Fee
+  as "a percentage of the hourly rate" without publishing the exact number).
+  Third-party breakdowns commonly cite a Service Fee around 15% and a Trust &
+  Support Fee in the 5-15% range plus a flat Trust & Safety charge in some
+  markets; treat those as directionally useful, not authoritative. Reconcile
+  against https://support.taskrabbit.com before quoting a specific number.
+sources:
+- https://developer.taskrabbit.com/docs/getting-started
+- https://support.taskrabbit.com/hc/en-us/articles/46260411872155-What-s-the-Taskrabbit-Service-Fee
+- https://support.taskrabbit.com/hc/en-us/articles/17965125708557-I-d-Like-To-Understand-The-Fees-On-My-Task-s-Invoice
+- https://www.taskrabbit.com/blog/how-much-does-it-cost-to-hire-a-tasker/
+plans:
+- id: taskrabbit-partner-api
+  name: Partner API (Developer Hub)
+  type: enterprise
+  description: >-
+    Access to the Delivery and Home Services surfaces requires a request
+    through TaskRabbit's developer access form; TaskRabbit typically reviews
+    and responds within two business days. There is no self-serve signup and
+    no published per-call or subscription price - integration terms are set
+    per partner.
+  entries:
+  - label: Partner Agreement
+    name: partner_agreement
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: negotiated with a TaskRabbit partnership manager (not published)
+    userMultiplied: false
+  elements:
+  - name: Auth0 OAuth2 Client-Credentials Access
+  - name: Sandbox and Production Environments
+  - name: Postman Collection (provided at onboarding)
+  - name: Svix-Signed Webhooks (Home Services)
+- id: taskrabbit-consumer-service-fee
+  name: Consumer Service Fee
+  type: usage
+  description: >-
+    Charged on every task regardless of booking channel. Calculated as a
+    percentage of the Tasker's hourly rate, applied per hour worked and
+    excluding reimbursements.
+  entries:
+  - label: Service Fee
+    name: service_fee
+    type: usage
+    metric: percent_of_task_price
+    limit: -1
+    timeFrame: task
+    geo: global
+    unit: 1
+    price: percentage of hourly rate (exact rate not published; commonly reported near 15%)
+    userMultiplied: false
+  elements:
+  - name: Applied Per Hour Worked
+  - name: Excludes Reimbursements
+- id: taskrabbit-trust-and-support-fee
+  name: Trust & Support Fee
+  type: usage
+  description: >-
+    Layered on top of the Service Fee in most US states to cover
+    trust-and-safety operations. Not itemized separately on invoices in
+    California and Massachusetts, where only the Service Fee is shown due to
+    state law.
+  entries:
+  - label: Trust & Support Fee
+    name: trust_support_fee
+    type: usage
+    metric: percent_of_task_price
+    limit: -1
+    timeFrame: task
+    geo: us
+    unit: 1
+    price: commonly reported in the 5-15% range, sometimes plus a small flat charge; varies by market and is not itemized in CA/MA
+    userMultiplied: false
+  elements:
+  - name: Excluded From CA/MA Invoices
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

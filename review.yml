@@ -1,0 +1,176 @@
+aid: taskrabbit
+name: TaskRabbit
+review:
+  question: Does TaskRabbit expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. TaskRabbit's documented Partner API
+    surfaces (Home Services Partner Platform and the Dolly-derived Delivery
+    API) are request/response REST over HTTPS. Event notification is handled
+    by outbound HTTP POST webhook callbacks (Svix-signed for Home Services;
+    unsigned but source-IP-allowlisted for Delivery), which are one-shot
+    server-to-client callbacks, not a persistent bidirectional or streaming
+    transport. There is no WebSocket, SSE, or other push-stream endpoint
+    documented on either surface, so there is nothing in scope to model as
+    AsyncAPI.
+findings:
+  apiStatus: |
+    Live, but partner-gated - not deprecated and not a legacy leftover. As of
+    this review TaskRabbit operates one Partner API program at
+    developer.taskrabbit.com covering two surfaces: (1) Delivery, built on
+    the Dolly Partner API (Dolly was acquired by TaskRabbit in November 2024
+    and rebranded TaskRabbit Delivery), which is mature and documented in
+    full; and (2) Home Services, a 2025-12-versioned Partner Platform
+    (Estimate, Availability, Bid, Book) that individual endpoint pages
+    describe as available in Sandbox and Production, even though the
+    top-level Developer Hub overview page still labels Home Services
+    "(coming soon!)" - that overview copy appears stale relative to the
+    endpoint-level docs.
+  operatingStatus: |
+    Access is approval-gated, not public self-serve. Getting Started
+    documents an Auth0 OAuth2 client-credentials (machine-to-machine) flow;
+    credentials are requested via a form and TaskRabbit says it typically
+    reviews and responds within two business days. A Postman collection is
+    provided by a business development contact at onboarding rather than
+    published publicly.
+  historicalNote: |
+    TaskRabbit's developer story goes back to February 2012, when it launched
+    an open API that let third-party to-do-list apps (Astrid, Producteev) and
+    other integrators create TaskRabbit tasks programmatically on a
+    consumer's behalf - a self-serve, publicly documented API of its era.
+    That original open API is defunct; there is no trace of self-serve
+    developer signup on today's taskrabbit.com or developer.taskrabbit.com.
+    IKEA (Ingka Group) acquired TaskRabbit outright in September 2017, and
+    the current gated Partner API model (built for retail/marketplace
+    integration partners rather than hobbyist app developers) reflects that
+    ownership - it is the shape of API TaskRabbit needs to support IKEA
+    checkout-time assembly booking and other B2B retail integrations, not a
+    revival of the old open consumer API.
+  summary: |
+    TaskRabbit does not publish a documented public WebSocket API. Its
+    Partner API is pure request/response REST over HTTPS on two base hosts:
+    a per-partner subdomain under partner-platform.taskrabbit.com (Home
+    Services, path-versioned /2025-12) and papi.dolly.com /
+    papi.sandbox.dolly.com (Delivery, /v1). Both require OAuth2
+    client-credentials bearer tokens obtained only after partner approval.
+    Event notifications are delivered as outbound HTTP POST webhooks
+    (Svix-signed on Home Services; IP-allowlisted on Delivery) rather than
+    any persistent or push-stream protocol. No realtime, bidirectional, or
+    streaming WebSocket (ws:// or wss://) endpoint is documented anywhere in
+    the Developer Hub.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+      documented: true
+      note: Home Services Partner Platform - Estimate, Availability, Bid, Book, catalog, cancel, reschedule.
+    - protocol: REST
+      scheme: https
+      baseURL: https://papi.dolly.com/v1
+      documented: true
+      note: TaskRabbit Delivery (Dolly-derived) Partner API, production. Sandbox at https://papi.sandbox.dolly.com/v1.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Home Services pushes project.completed, project.canceled, project.rescheduled via Svix-signed HTTP POST to a partner-configured endpoint, managed in the Svix Partner Dashboard.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Delivery pushes COURIER_REQUESTED through DELIVERED/RETURNED/CANCELLED lifecycle events via HTTP POST from an allowlisted set of source IPs (44.238.152.36, 44.232.216.253, 52.41.182.222); payload signing is not documented.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the TaskRabbit Developer Hub as of the review date.
+  endpointsConfirmedRest:
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/estimate
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/availability
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/bid
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/book
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/list
+    - GET  https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/{project_uuid}
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/{project_uuid}/cancel
+    - GET  https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/{project_uuid}/reschedule-availability
+    - POST https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/{project_uuid}/reschedule
+    - GET  https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/brands/{brand_uuid}/services
+    - PUT  https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/services/{service_uuid}/external-identifier
+    - POST https://papi.dolly.com/v1/deliveries
+    - GET  https://papi.dolly.com/v1/me
+    - GET  https://papi.dolly.com/v1/ping
+  endpointsModeled: true
+  endpointsModeledNote: |
+    Method and path are sourced directly from TaskRabbit's public developer
+    documentation. Full request/response field schemas are not fully public
+    (several fields are described only in prose, and the Postman collection
+    with concrete examples is handed to partners at onboarding rather than
+    published), so the OpenAPI document in this repository models the
+    documented parameters conservatively and flags unresolved fields rather
+    than inventing them.
+sources:
+  - url: https://developer.taskrabbit.com/docs/overview
+    type: Documentation
+    note: States the Developer Hub covers Delivery by Dolly (live) and TaskRabbit Home Services, tagged "(coming soon!)" in this page's own tagline despite Home Services having full endpoint documentation.
+  - url: https://developer.taskrabbit.com/docs/getting-started
+    type: Documentation
+    note: Auth0 OAuth2 client-credentials (M2M) flow; access requested via form, reviewed within ~2 business days; no self-serve signup.
+  - url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+    type: Documentation
+    note: Describes the Estimate, Availability, Bid, Book sequence and that all requests require an API key/token from a Taskrabbit partnership manager.
+  - url: https://developer.taskrabbit.com/reference/projectestimate
+    type: APIReference
+    note: POST /2025-12/projects/estimate on a per-partner partner-platform.taskrabbit.com subdomain.
+  - url: https://developer.taskrabbit.com/reference/projectavailability
+    type: APIReference
+    note: POST /2025-12/projects/availability.
+  - url: https://developer.taskrabbit.com/reference/projectbid
+    type: APIReference
+    note: POST /2025-12/projects/bid.
+  - url: https://developer.taskrabbit.com/reference/projectbook
+    type: APIReference
+    note: POST /2025-12/projects/book.
+  - url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+    type: APIReference
+    note: GET /2025-12/projects/{project_uuid}.
+  - url: https://developer.taskrabbit.com/reference/cancelbookedproject
+    type: APIReference
+    note: POST /2025-12/projects/{project_uuid}/cancel with enumerated cancellation_reason.
+  - url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+    type: APIReference
+    note: GET /2025-12/brands/{brand_uuid}/services.
+  - url: https://developer.taskrabbit.com/docs/webhooks-1
+    type: Documentation
+    note: Home Services webhooks (project.completed/canceled/rescheduled) delivered via Svix, HTTP POST, signature verification recommended.
+  - url: https://developer.taskrabbit.com/docs/webhooks
+    type: Documentation
+    note: Delivery (Dolly) webhooks for courier/delivery lifecycle events, HTTP callback to a partner-hosted receiver, source IPs allowlisted.
+  - url: https://developer.taskrabbit.com/reference/get-partner-information
+    type: APIReference
+    note: GET https://papi.dolly.com/v1/me (production) / https://papi.sandbox.dolly.com/v1/me (sandbox).
+  - url: https://developer.taskrabbit.com/llms.txt
+    type: Documentation
+    note: Machine-readable index of every Developer Hub guide and API reference page.
+  - url: https://www.taskrabbit.com/press/release/taskrabbit-acquires-dolly-to-strengthen-local-moving-and-delivery-services
+    type: PressRelease
+    note: TaskRabbit acquired Dolly (November 2024); Dolly rebranded TaskRabbit Delivery.
+  - url: https://techcrunch.com/2017/09/28/ikea-buys-taskrabbit/
+    type: News
+    note: IKEA (Ingka Group) acquired TaskRabbit, September 2017.
+  - url: https://vator.tv/2012-02-10-taskrabbit-opens-its-api-to-app-developers/
+    type: News
+    note: TaskRabbit's original open developer API, opened February 2012, allowing third-party to-do apps to create tasks; no longer operative.
+  - url: https://support.taskrabbit.com/hc/en-us/articles/46260411872155-What-s-the-Taskrabbit-Service-Fee
+    type: Documentation
+    note: Confirms the consumer Service Fee is a percentage of the hourly task rate, applied per hour, excluding reimbursements; exact percentage not published.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or other push-stream protocol surface exists on either
+    TaskRabbit Partner API surface. Both are REST plus outbound webhook
+    callbacks, so no AsyncAPI document was created. apis.yml documents the
+    Home Services and Delivery REST surfaces, the gated OAuth2 access model,
+    and the IKEA-ownership/Dolly-acquisition/2012-open-API history so the
+    catalog entry is not mistaken for either a fully open developer API or a
+    dead one.
