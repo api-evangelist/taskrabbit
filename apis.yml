@@ -162,6 +162,10 @@ apis:
     through DELIVERED lifecycle events are pushed as HTTP POST webhooks from an
     allowlisted set of source IPs.
 common:
+- type: Authentication
+  url: authentication/taskrabbit-authentication.yml
+- type: OAuthScopes
+  url: scopes/taskrabbit-scopes.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/taskrabbit
 - type: Website
@@ -170,6 +174,8 @@ common:
   url: https://developer.taskrabbit.com/
 - type: Plans
   url: plans/taskrabbit-plans-pricing.yml
+- url: https://www.taskrabbit.com/blog/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

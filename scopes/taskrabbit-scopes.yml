@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/taskrabbit-openapi.yml
+docs: https://developer.taskrabbit.com/docs/getting-started
+note: TaskRabbit's gated Partner API authenticates via Auth0 machine-to-machine OAuth2
+  client-credentials tokens issued during partner onboarding, and its documentation
+  (https://developer.taskrabbit.com/docs/getting-started) publishes no OAuth scopes
+  or scope-based permissions.
+schemes:
+- name: oauth2
+  source: openapi/taskrabbit-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://taskrabbit.auth0.com/oauth/token
+  description: Auth0 machine-to-machine (M2M) OAuth2 client-credentials grant. Credentials are
+    issued during partner onboarding.
+scopes: []
