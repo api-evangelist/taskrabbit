@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/taskrabbit-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://taskrabbit.auth0.com/oauth/token
+    scopes: 0
+  description: Auth0 machine-to-machine (M2M) OAuth2 client-credentials grant. Credentials are
+    issued during partner onboarding.
+  sources:
+  - openapi/taskrabbit-openapi.yml

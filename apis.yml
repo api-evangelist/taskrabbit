@@ -162,6 +162,8 @@ apis:
     through DELIVERED lifecycle events are pushed as HTTP POST webhooks from an
     allowlisted set of source IPs.
 common:
+- type: DomainSecurity
+  url: security/taskrabbit-domain-security.yml
 - type: Authentication
   url: authentication/taskrabbit-authentication.yml
 - type: OAuthScopes
