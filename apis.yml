@@ -22,7 +22,20 @@ description: TaskRabbit is a gig-economy marketplace connecting customers with l
   per partner. End-customer pricing on TaskRabbit itself follows a standard
   Service Fee plus Trust & Support Fee structure layered on top of each Tasker's
   hourly rate.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/taskrabbit.png
 tags:
 - Gig Economy
 - Handyman
@@ -36,131 +49,226 @@ created: '2026-07-03'
 modified: '2026-07-03'
 specificationVersion: '0.19'
 apis:
-- aid: taskrabbit:taskrabbit-home-services-estimate-api
-  name: TaskRabbit Home Services Estimate API
-  tags:
-  - Estimates
-  - Pricing
-  - Home Services
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: taskrabbit:taskrabbit-delivery-api
+  name: TaskRabbit Delivery API
+  description: Dolly-based on-demand delivery, quoting, and routing.
   humanURL: https://developer.taskrabbit.com/docs/project-estimate
   baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
-  properties:
-  - url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
-    type: Documentation
-  - url: https://developer.taskrabbit.com/reference/projectestimate
-    type: APIReference
-  - url: openapi/taskrabbit-openapi.yml
-    type: OpenAPI
-  description: POST /projects/estimate is the first call in the Estimate, Availability,
-    Bid, Book booking sequence - it returns service eligibility and a price estimate
-    for a postal code or full address plus one or more requested services. Requires
-    an OAuth2 bearer token and a partner-issued API subdomain; available in Sandbox
-    and Production.
-- aid: taskrabbit:taskrabbit-home-services-availability-api
-  name: TaskRabbit Home Services Availability API
-  tags:
-  - Availability
-  - Scheduling
-  - Home Services
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.taskrabbit.com/docs/checking-availability
-  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
-  properties:
-  - url: https://developer.taskrabbit.com/docs/checking-availability
-    type: Documentation
-  - url: https://developer.taskrabbit.com/reference/projectavailability
-    type: APIReference
-  - url: openapi/taskrabbit-openapi.yml
-    type: OpenAPI
-  description: POST /projects/availability returns real-time bookable time windows
-    and estimated pricing for one or more services at a location, optionally
-    bounded by a date_from/date_to range, so a partner checkout flow can show
-    live appointment slots.
-- aid: taskrabbit:taskrabbit-home-services-booking-api
-  name: TaskRabbit Home Services Booking API
-  tags:
-  - Bookings
-  - Projects
-  - Webhooks
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.taskrabbit.com/docs/booking-a-project
-  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
-  properties:
-  - url: https://developer.taskrabbit.com/docs/creating-a-bid
-    type: Documentation
-  - url: https://developer.taskrabbit.com/reference/projectbid
-    type: APIReference
-  - url: https://developer.taskrabbit.com/reference/projectbook
-    type: APIReference
-  - url: https://developer.taskrabbit.com/reference/getprojectbyuuid
-    type: APIReference
-  - url: https://developer.taskrabbit.com/reference/cancelbookedproject
-    type: APIReference
-  - url: https://developer.taskrabbit.com/docs/webhooks-1
-    type: Documentation
-  - url: openapi/taskrabbit-openapi.yml
-    type: OpenAPI
-  description: Covers the rest of the booking lifecycle - POST /projects/bid locks
-    a formal quote and Project UUID against a chosen time window, POST /projects/book
-    completes the booking and charges the customer, GET /projects/{project_uuid}
-    and POST /projects/list check status, POST /projects/{project_uuid}/cancel
-    cancels with an enumerated reason, and a reschedule-availability/reschedule
-    pair moves a booked project. project.completed, project.canceled, and
-    project.rescheduled events are pushed as Svix-signed HTTP POST webhooks.
-- aid: taskrabbit:taskrabbit-home-services-catalog-api
-  name: TaskRabbit Home Services Catalog API
-  tags:
-  - Catalog
-  - Services
-  - Categories
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.taskrabbit.com/docs/get-service-catalog
-  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
-  properties:
-  - url: https://developer.taskrabbit.com/docs/get-service-catalog
-    type: Documentation
-  - url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
-    type: APIReference
-  - url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
-    type: APIReference
-  - url: openapi/taskrabbit-openapi.yml
-    type: OpenAPI
-  description: GET /brands/{brand_uuid}/services returns a partner brand's full
-    configured service catalog - names, pricing, and requirements - with optional
-    pricing inclusion and locale filters, keeping a partner's product pages in
-    sync with what TaskRabbit actually offers. PUT updates a service's
-    partner-defined external identifier for catalog reconciliation.
-- aid: taskrabbit:taskrabbit-delivery-api
-  name: TaskRabbit Delivery API (Dolly)
   tags:
   - Delivery
-  - Moving
-  - Logistics
-  - Dolly
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.taskrabbit.com/docs/overview
-  baseURL: https://papi.dolly.com/v1
   properties:
-  - url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
-    type: Documentation
-  - url: https://developer.taskrabbit.com/docs/scheduling
-    type: Documentation
-  - url: https://developer.taskrabbit.com/docs/webhooks
-    type: Documentation
-  - url: https://developer.taskrabbit.com/reference/get-partner-information
-    type: APIReference
-  - url: openapi/taskrabbit-openapi.yml
-    type: OpenAPI
-  description: TaskRabbit acquired on-demand moving/delivery company Dolly in
-    November 2024 and rebranded its service as TaskRabbit Delivery; the pre-existing
-    Dolly Partner API (PAPI, base https://papi.dolly.com, sandbox
-    https://papi.sandbox.dolly.com) continues to power it. POST /v1/deliveries
-    quotes and creates a delivery, with companion endpoints to fetch delivery
-    info, add/update units, add a tip, cancel, build multi-stop routes, and check
-    partner identity (GET /v1/me) or service health (ping). COURIER_REQUESTED
-    through DELIVERED lifecycle events are pushed as HTTP POST webhooks from an
-    allowlisted set of source IPs.
+  - type: OpenAPI
+    url: openapi/taskrabbit-delivery-api-openapi.yml
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectestimate
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/checking-availability
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectavailability
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/creating-a-bid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbook
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/cancelbookedproject
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks-1
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/get-service-catalog
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/scheduling
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/get-partner-information
+- aid: taskrabbit:taskrabbit-home-services-availability-api
+  name: TaskRabbit Home Services Availability API
+  description: Real-time bookable time windows for Home Services projects.
+  humanURL: https://developer.taskrabbit.com/docs/project-estimate
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  tags:
+  - Home Services Availability
+  properties:
+  - type: OpenAPI
+    url: openapi/taskrabbit-home-services-availability-api-openapi.yml
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectestimate
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/checking-availability
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectavailability
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/creating-a-bid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbook
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/cancelbookedproject
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks-1
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/get-service-catalog
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/scheduling
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/get-partner-information
+- aid: taskrabbit:taskrabbit-home-services-booking-api
+  name: TaskRabbit Home Services Booking API
+  description: Bid, book, retrieve, cancel, and reschedule Home Services projects.
+  humanURL: https://developer.taskrabbit.com/docs/project-estimate
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  tags:
+  - Home Services Booking
+  properties:
+  - type: OpenAPI
+    url: openapi/taskrabbit-home-services-booking-api-openapi.yml
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectestimate
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/checking-availability
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectavailability
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/creating-a-bid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbook
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/cancelbookedproject
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks-1
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/get-service-catalog
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/scheduling
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/get-partner-information
+- aid: taskrabbit:taskrabbit-home-services-catalog-api
+  name: TaskRabbit Home Services Catalog API
+  description: Partner brand service catalog for Home Services.
+  humanURL: https://developer.taskrabbit.com/docs/project-estimate
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  tags:
+  - Home Services Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/taskrabbit-home-services-catalog-api-openapi.yml
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectestimate
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/checking-availability
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectavailability
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/creating-a-bid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbook
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/cancelbookedproject
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks-1
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/get-service-catalog
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/scheduling
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/get-partner-information
+- aid: taskrabbit:taskrabbit-home-services-estimate-api
+  name: TaskRabbit Home Services Estimate API
+  description: Pricing and eligibility estimation for Home Services projects.
+  humanURL: https://developer.taskrabbit.com/docs/project-estimate
+  baseURL: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+  tags:
+  - Home Services Estimate
+  properties:
+  - type: OpenAPI
+    url: openapi/taskrabbit-home-services-estimate-api-openapi.yml
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectestimate
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/checking-availability
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectavailability
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/creating-a-bid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/projectbook
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/getprojectbyuuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/cancelbookedproject
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks-1
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/get-service-catalog
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/listservicesbybranduuid
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/updateserviceexternalidentifier
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/requesting-delivery-quotes
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/scheduling
+  - type: Documentation
+    url: https://developer.taskrabbit.com/docs/webhooks
+  - type: APIReference
+    url: https://developer.taskrabbit.com/reference/get-partner-information
 common:
 - type: AgenticAccess
   url: agentic-access/taskrabbit-agentic-access.yml
