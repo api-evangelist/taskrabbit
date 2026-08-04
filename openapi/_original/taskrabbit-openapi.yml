@@ -1,0 +1,574 @@
+openapi: 3.0.3
+info:
+  title: TaskRabbit Partner API
+  description: >-
+    TaskRabbit's Partner API program, documented at developer.taskrabbit.com,
+    spans two live surfaces: the Home Services Partner Platform (versioned
+    2025-12) covering the Estimate, Availability, Bid, Book project workflow
+    plus catalog and cancellation/reschedule management, and the Delivery API
+    inherited from Dolly (acquired by TaskRabbit in November 2024 and
+    rebranded TaskRabbit Delivery). Both surfaces require partner approval
+    and Auth0 OAuth2 client-credentials (machine-to-machine) tokens; there is
+    no public self-serve signup. Endpoint shapes below are modeled from
+    TaskRabbit's public developer documentation (method, path, and the
+    parameters/fields the docs describe); exact request/response schemas are
+    partially withheld behind the gated Postman collection and reference
+    pages given to approved partners, so object schemas here are
+    best-effort and marked accordingly rather than fabricated in full detail.
+  version: '2025-12'
+  contact:
+    name: TaskRabbit Developer Hub
+    url: https://developer.taskrabbit.com
+  x-endpointsModeled: true
+  x-accessModel: Partner-approval gated; no public self-serve signup.
+servers:
+  - url: https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12
+    description: TaskRabbit Home Services Partner Platform (partner-specific subdomain, Sandbox and Production)
+    variables:
+      api_subdomain:
+        default: your-subdomain
+        description: Subdomain issued to the partner during onboarding.
+  - url: https://papi.dolly.com/v1
+    description: TaskRabbit Delivery (Dolly) Partner API - Production
+  - url: https://papi.sandbox.dolly.com/v1
+    description: TaskRabbit Delivery (Dolly) Partner API - Sandbox
+security:
+  - oauth2: []
+tags:
+  - name: Home Services Estimate
+    description: Pricing and eligibility estimation for Home Services projects.
+  - name: Home Services Availability
+    description: Real-time bookable time windows for Home Services projects.
+  - name: Home Services Booking
+    description: Bid, book, retrieve, cancel, and reschedule Home Services projects.
+  - name: Home Services Catalog
+    description: Partner brand service catalog for Home Services.
+  - name: Delivery
+    description: Dolly-based on-demand delivery, quoting, and routing.
+paths:
+  /projects/estimate:
+    post:
+      operationId: estimateProject
+      tags:
+        - Home Services Estimate
+      summary: Estimate Services
+      description: >-
+        Returns service eligibility and a price estimate for a given postal
+        code or full address and one or more requested services. The first
+        call in the Estimate, Availability, Bid, Book sequence.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstimateRequest'
+      responses:
+        '201':
+          description: Estimated pricing for the requested services.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateResponse'
+        '400':
+          description: Invalid estimate request parameters.
+  /projects/availability:
+    post:
+      operationId: checkProjectAvailability
+      tags:
+        - Home Services Availability
+      summary: Check Service Availability
+      description: >-
+        Returns available appointment time windows and estimated pricing for
+        one or more services at a location, optionally bounded by
+        date_from/date_to.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvailabilityRequest'
+      responses:
+        '201':
+          description: Available time windows and estimated prices.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+        '400':
+          description: Invalid availability request.
+  /projects/bid:
+    post:
+      operationId: bidProjectAgreement
+      tags:
+        - Home Services Booking
+      summary: Bid Project Agreement
+      description: >-
+        Creates a formal price agreement for the customer's chosen
+        date/time window and returns the most accurate pricing plus the
+        Project UUID needed to complete the booking.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BidRequest'
+      responses:
+        '201':
+          description: Formal price quote and Project UUID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BidResponse'
+        '400':
+          description: Invalid bid request.
+  /projects/book:
+    post:
+      operationId: bookProjectAgreement
+      tags:
+        - Home Services Booking
+      summary: Book a Project Agreement
+      description: Completes the booking created by projects/bid and confirms payment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookRequest'
+      responses:
+        '201':
+          description: Project booked.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid booking request.
+  /projects/list:
+    post:
+      operationId: listProjects
+      tags:
+        - Home Services Booking
+      summary: List Projects
+      description: Lists projects for the authenticated partner brand, per TaskRabbit's documented endpoint index.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Documented filter/pagination fields are not published; see the Postman collection provided at partner onboarding.
+      responses:
+        '200':
+          description: A list of projects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+  /projects/{project_uuid}:
+    get:
+      operationId: getProjectByUuid
+      tags:
+        - Home Services Booking
+      summary: Retrieve a Project by UUID
+      description: Retrieves detailed information about a specific project.
+      parameters:
+        - name: project_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Project successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Project not found.
+  /projects/{project_uuid}/cancel:
+    post:
+      operationId: cancelBookedProject
+      tags:
+        - Home Services Booking
+      summary: Cancel Booked Project
+      description: Cancels a booked project using an enumerated cancellation reason.
+      parameters:
+        - name: project_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - cancellation_reason
+              properties:
+                cancellation_reason:
+                  type: string
+                  enum:
+                    - order_canceled
+                    - delivery_delayed
+                    - changed_mind
+                    - cancelled_by_cs
+      responses:
+        '201':
+          description: Successfully cancelled Project.
+        '400':
+          description: Invalid cancellation_reason param.
+  /projects/{project_uuid}/reschedule-availability:
+    get:
+      operationId: getRescheduleAvailability
+      tags:
+        - Home Services Booking
+      summary: Check Reschedule Availability
+      description: Returns available time windows a booked project can be rescheduled into.
+      parameters:
+        - name: project_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Available reschedule windows.
+  /projects/{project_uuid}/reschedule:
+    post:
+      operationId: rescheduleProject
+      tags:
+        - Home Services Booking
+      summary: Reschedule Project
+      description: Reschedules a booked project to a new available time window.
+      parameters:
+        - name: project_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Documented to require a selected reschedule window; exact field names are not published outside partner onboarding materials.
+      responses:
+        '201':
+          description: Project rescheduled.
+  /brands/{brand_uuid}/services:
+    get:
+      operationId: listServicesByBrandUuid
+      tags:
+        - Home Services Catalog
+      summary: List Services by Brand
+      description: >-
+        Retrieves all services configured for a partner brand, including
+        names, pricing, and requirements.
+      parameters:
+        - name: brand_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: include_pricing
+          in: query
+          schema:
+            type: boolean
+            default: true
+        - name: external_identifier
+          in: query
+          schema:
+            type: string
+        - name: locale
+          in: query
+          schema:
+            type: string
+            enum: [en-US]
+      responses:
+        '200':
+          description: The brand's service catalog.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Service'
+  /services/{service_uuid}/external-identifier:
+    put:
+      operationId: updateServiceExternalIdentifier
+      tags:
+        - Home Services Catalog
+      summary: Update Service External Identifier
+      description: Updates a service's partner-defined external identifier for catalog reconciliation.
+      parameters:
+        - name: service_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - external_identifier
+              properties:
+                external_identifier:
+                  type: string
+      responses:
+        '200':
+          description: Service updated.
+  /deliveries:
+    post:
+      operationId: createDelivery
+      tags:
+        - Delivery
+      summary: Create Delivery
+      description: >-
+        Quotes and creates an on-demand delivery via TaskRabbit Delivery
+        (Dolly). Server variable for this path is the Dolly PAPI base URL,
+        not the Home Services partner-platform host.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Pickup/dropoff addresses, item/unit details, and vehicle/service level; full field list is provided via the partner Postman collection.
+      responses:
+        '200':
+          description: Delivery created.
+  /me:
+    get:
+      operationId: getPartnerInformation
+      tags:
+        - Delivery
+      summary: Get Partner Info
+      description: Returns the authorized partner's information (icon URL, store display name, partner ID, subject ID).
+      responses:
+        '200':
+          description: Partner information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  defaultIconUrl:
+                    type: string
+                  defaultStoreDisplayName:
+                    type: string
+                  partnerId:
+                    type: string
+                  subjectId:
+                    type: string
+              example:
+                defaultIconUrl: https://dolly.com/images/dolly-logo-pink.svg
+                defaultStoreDisplayName: Dolly QA
+                partnerId: dolly
+                subjectId: k0DjAYBzosSIbUU2AMdMLKtpk0tv081Z
+  /ping:
+    get:
+      operationId: pingDeliveryApi
+      tags:
+        - Delivery
+      summary: Return Ping
+      description: A simple route that can be used to validate that the Delivery API is up and running.
+      responses:
+        '200':
+          description: Service is healthy.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: Auth0 machine-to-machine (M2M) OAuth2 client-credentials grant. Credentials are issued during partner onboarding.
+      flows:
+        clientCredentials:
+          tokenUrl: https://taskrabbit.auth0.com/oauth/token
+          scopes: {}
+  schemas:
+    EstimateRequest:
+      type: object
+      required:
+        - locale
+        - currency
+        - location
+        - services
+      properties:
+        locale:
+          type: string
+          enum: [en-US]
+        currency:
+          type: string
+          enum: [USD]
+        location:
+          $ref: '#/components/schemas/Location'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItemRequest'
+    EstimateResponse:
+      type: object
+      description: Service eligibility and price estimate; exact response shape not published outside partner materials.
+      properties:
+        eligible:
+          type: boolean
+        estimated_price_cents:
+          type: integer
+    AvailabilityRequest:
+      type: object
+      required:
+        - locale
+        - currency
+        - location
+        - services
+      properties:
+        locale:
+          type: string
+          enum: [en-US]
+        currency:
+          type: string
+          enum: [USD]
+        location:
+          $ref: '#/components/schemas/Location'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItemRequest'
+        date_from:
+          type: string
+          format: date
+        date_to:
+          type: string
+          format: date
+    AvailabilityResponse:
+      type: object
+      properties:
+        windows:
+          type: array
+          items:
+            type: object
+            properties:
+              start_time:
+                type: string
+                format: date-time
+              end_time:
+                type: string
+                format: date-time
+              estimated_price_cents:
+                type: integer
+    BidRequest:
+      type: object
+      required:
+        - locale
+        - currency
+        - location
+        - service_item_terms
+        - target_start_time
+      properties:
+        locale:
+          type: string
+          enum: [en-US]
+        currency:
+          type: string
+          enum: [USD]
+        location:
+          $ref: '#/components/schemas/Location'
+        service_item_terms:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItemRequest'
+        target_start_time:
+          type: string
+          format: date-time
+    BidResponse:
+      type: object
+      properties:
+        project_uuid:
+          type: string
+          format: uuid
+        price_cents:
+          type: integer
+    BookRequest:
+      type: object
+      required:
+        - client
+        - project_uuid
+        - client_amount_charged_cents
+        - client_accepted_taskrabbit_policy
+        - agreement_external_reference
+      properties:
+        client:
+          type: object
+          description: Client (service recipient) information.
+        project_uuid:
+          type: string
+          format: uuid
+        client_amount_charged_cents:
+          type: integer
+        client_accepted_taskrabbit_policy:
+          type: boolean
+        agreement_external_reference:
+          type: string
+        agreement_accounting_reference:
+          type: string
+    Project:
+      type: object
+      properties:
+        project_uuid:
+          type: string
+          format: uuid
+        status:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItemRequest'
+    Service:
+      type: object
+      properties:
+        service_uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        external_identifier:
+          type: string
+        pricing:
+          type: object
+    ServiceItemRequest:
+      type: object
+      description: A requested service line item; exact field list beyond category/quantity is not published outside partner materials.
+      properties:
+        service_id:
+          type: string
+        quantity:
+          type: integer
+    Location:
+      type: object
+      properties:
+        postal_code:
+          type: string
+        address:
+          type: string

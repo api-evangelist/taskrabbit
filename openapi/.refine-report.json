@@ -1,0 +1,22 @@
+{
+  "provider": "taskrabbit",
+  "sources": [
+    "taskrabbit-delivery-api-openapi.yml",
+    "taskrabbit-home-services-availability-api-openapi.yml",
+    "taskrabbit-home-services-booking-api-openapi.yml",
+    "taskrabbit-home-services-catalog-api-openapi.yml",
+    "taskrabbit-home-services-estimate-api-openapi.yml"
+  ],
+  "outputs": [
+    "taskrabbit-delivery-api-openapi.yml",
+    "taskrabbit-home-services-availability-api-openapi.yml",
+    "taskrabbit-home-services-booking-api-openapi.yml",
+    "taskrabbit-home-services-catalog-api-openapi.yml",
+    "taskrabbit-home-services-estimate-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
