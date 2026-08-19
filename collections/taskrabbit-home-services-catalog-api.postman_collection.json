@@ -1,0 +1,316 @@
+{
+  "item": [
+    {
+      "id": "3a974e8f-d180-4b04-8374-3784940ce15c",
+      "name": "Home Services Catalog",
+      "description": {
+        "content": "Partner brand service catalog for Home Services.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ae70f16c-693c-40a8-8b80-f191edf56863",
+          "name": "List Services by Brand",
+          "request": {
+            "name": "List Services by Brand",
+            "description": {
+              "content": "Retrieves all services configured for a partner brand, including names, pricing, and requirements.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands",
+                ":brand_uuid",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_pricing",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "external_identifier",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "brand_uuid",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc8f8874-087d-44ce-84ae-ec2f1aa3ed63",
+              "name": "The brand's service catalog.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    ":brand_uuid",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_pricing",
+                      "value": "true"
+                    },
+                    {
+                      "key": "external_identifier",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "brand_uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"service_uuid\": \"cde432b2-2563-4f1a-4b99-e35ba8189c67\",\n      \"name\": \"string\",\n      \"external_identifier\": \"string\",\n      \"pricing\": {}\n    },\n    {\n      \"service_uuid\": \"41798a51-cc00-bd00-6cf4-e8f41302afdb\",\n      \"name\": \"string\",\n      \"external_identifier\": \"string\",\n      \"pricing\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52bb913b-fbca-4ce5-bea5-c7f4c4f90198",
+          "name": "Update Service External Identifier",
+          "request": {
+            "name": "Update Service External Identifier",
+            "description": {
+              "content": "Updates a service's partner-defined external identifier for catalog reconciliation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "services",
+                ":service_uuid",
+                "external-identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "service_uuid",
+                  "description": "(Required) "
+                },
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"external_identifier\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b978a8e9-0bca-4d3a-8421-270f84536c46",
+              "name": "Service updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "services",
+                    ":service_uuid",
+                    "external-identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "service_uuid",
+                      "description": "(Required) "
+                    },
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"external_identifier\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Subdomain issued to the partner during onboarding.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subdomain",
+      "key": "api_subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{api_subdomain}}.partner-platform.taskrabbit.com/2025-12",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://taskrabbit.auth0.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4f129964-524e-4691-af51-c599578134e5",
+    "name": "TaskRabbit Partner Delivery Home Services Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "TaskRabbit's Partner API program, documented at developer.taskrabbit.com, spans two live surfaces: the Home Services Partner Platform (versioned 2025-12) covering the Estimate, Availability, Bid, Book project workflow plus catalog and cancellation/reschedule management, and the Delivery API inherited from Dolly (acquired by TaskRabbit in November 2024 and rebranded TaskRabbit Delivery). Both surfaces require partner approval and Auth0 OAuth2 client-credentials (machine-to-machine) tokens; there is no public self-serve signup. Endpoint shapes below are modeled from TaskRabbit's public developer documentation (method, path, and the parameters/fields the docs describe); exact request/response schemas are partially withheld behind the gated Postman collection and reference pages given to approved partners, so object schemas here are best-effort and marked accordingly rather than fabricated in full detail.\n\nContact Support:\n Name: TaskRabbit Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

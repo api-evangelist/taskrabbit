@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TaskRabbit Partner Delivery Home Services Booking API",
+    "version": "2025-12"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://taskrabbit.auth0.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Home Services Booking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bid Project Agreement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/bid",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a formal price agreement for the customer's chosen date/time window and returns the most accurate pricing plus the Project UUID needed to complete the booking."
+        },
+        {
+          "info": {
+            "name": "Book a Project Agreement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/book",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes the booking created by projects/bid and confirms payment."
+        },
+        {
+          "info": {
+            "name": "List Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lists projects for the authenticated partner brand, per TaskRabbit's documented endpoint index."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Project by UUID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/:project_uuid",
+            "params": [
+              {
+                "name": "project_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific project."
+        },
+        {
+          "info": {
+            "name": "Cancel Booked Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/:project_uuid/cancel",
+            "params": [
+              {
+                "name": "project_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels a booked project using an enumerated cancellation reason."
+        },
+        {
+          "info": {
+            "name": "Check Reschedule Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/:project_uuid/reschedule-availability",
+            "params": [
+              {
+                "name": "project_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns available time windows a booked project can be rescheduled into."
+        },
+        {
+          "info": {
+            "name": "Reschedule Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/:project_uuid/reschedule",
+            "params": [
+              {
+                "name": "project_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reschedules a booked project to a new available time window."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,333 @@
+{
+  "item": [
+    {
+      "id": "4baa514d-1b04-4c06-942e-a6cb79e7a134",
+      "name": "Delivery",
+      "description": {
+        "content": "Dolly-based on-demand delivery, quoting, and routing.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf5d970b-7cd5-42e0-9aee-e259b8e86c63",
+          "name": "Create Delivery",
+          "request": {
+            "name": "Create Delivery",
+            "description": {
+              "content": "Quotes and creates an on-demand delivery via TaskRabbit Delivery (Dolly). Server variable for this path is the Dolly PAPI base URL, not the Home Services partner-platform host.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deliveries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35b29e2a-74a8-44f2-9ea9-f95e50b6fa89",
+              "name": "Delivery created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf9e85aa-c4df-4d30-8c4d-826d9613c927",
+          "name": "Get Partner Info",
+          "request": {
+            "name": "Get Partner Info",
+            "description": {
+              "content": "Returns the authorized partner's information (icon URL, store display name, partner ID, subject ID).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7b4b4eb-7658-4fa5-84dd-0c1c5bdadc48",
+              "name": "Partner information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"defaultIconUrl\": \"https://dolly.com/images/dolly-logo-pink.svg\",\n  \"defaultStoreDisplayName\": \"Dolly QA\",\n  \"partnerId\": \"dolly\",\n  \"subjectId\": \"k0DjAYBzosSIbUU2AMdMLKtpk0tv081Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e15297c-c977-4903-a279-249409cdbc19",
+          "name": "Return Ping",
+          "request": {
+            "name": "Return Ping",
+            "description": {
+              "content": "A simple route that can be used to validate that the Delivery API is up and running.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ping"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "97f7b711-be21-48bd-b5b8-8d2aec12d44c",
+              "name": "Service is healthy.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ping"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Subdomain issued to the partner during onboarding.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subdomain",
+      "key": "api_subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{api_subdomain}}.partner-platform.taskrabbit.com/2025-12",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://taskrabbit.auth0.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "746d52d5-e0ac-492c-a6bf-6afcdc7e19e9",
+    "name": "TaskRabbit Partner Delivery API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "TaskRabbit's Partner API program, documented at developer.taskrabbit.com, spans two live surfaces: the Home Services Partner Platform (versioned 2025-12) covering the Estimate, Availability, Bid, Book project workflow plus catalog and cancellation/reschedule management, and the Delivery API inherited from Dolly (acquired by TaskRabbit in November 2024 and rebranded TaskRabbit Delivery). Both surfaces require partner approval and Auth0 OAuth2 client-credentials (machine-to-machine) tokens; there is no public self-serve signup. Endpoint shapes below are modeled from TaskRabbit's public developer documentation (method, path, and the parameters/fields the docs describe); exact request/response schemas are partially withheld behind the gated Postman collection and reference pages given to approved partners, so object schemas here are best-effort and marked accordingly rather than fabricated in full detail.\n\nContact Support:\n Name: TaskRabbit Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

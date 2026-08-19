@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TaskRabbit Partner Delivery API",
+    "version": "2025-12"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://taskrabbit.auth0.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Delivery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Delivery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/deliveries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quotes and creates an on-demand delivery via TaskRabbit Delivery (Dolly). Server variable for this path is the Dolly PAPI base URL, not the Home Services partner-platform host."
+        },
+        {
+          "info": {
+            "name": "Get Partner Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/me"
+          },
+          "docs": "Returns the authorized partner's information (icon URL, store display name, partner ID, subject ID)."
+        },
+        {
+          "info": {
+            "name": "Return Ping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/ping"
+          },
+          "docs": "A simple route that can be used to validate that the Delivery API is up and running."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

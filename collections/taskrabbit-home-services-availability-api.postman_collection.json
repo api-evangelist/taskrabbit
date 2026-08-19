@@ -1,0 +1,224 @@
+{
+  "item": [
+    {
+      "id": "d78661d8-5099-47ca-a5bb-4232fa8fca64",
+      "name": "Home Services Availability",
+      "description": {
+        "content": "Real-time bookable time windows for Home Services projects.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ee68c377-6226-45ef-8f97-1071c44eb27b",
+          "name": "Check Service Availability",
+          "request": {
+            "name": "Check Service Availability",
+            "description": {
+              "content": "Returns available appointment time windows and estimated pricing for one or more services at a location, optionally bounded by date_from/date_to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                "availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"locale\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"location\": {\n    \"postal_code\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"services\": [\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ],\n  \"date_from\": \"<date>\",\n  \"date_to\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ed3db302-8f98-4eec-b3c1-47c2065b5348",
+              "name": "Available time windows and estimated prices.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locale\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"location\": {\n    \"postal_code\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"services\": [\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ],\n  \"date_from\": \"<date>\",\n  \"date_to\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"windows\": [\n    {\n      \"start_time\": \"1978-06-29T11:11:17.617Z\",\n      \"end_time\": \"1993-11-03T05:27:37.484Z\",\n      \"estimated_price_cents\": 3082\n    },\n    {\n      \"start_time\": \"1979-10-09T10:41:23.340Z\",\n      \"end_time\": \"1957-01-31T20:46:57.021Z\",\n      \"estimated_price_cents\": 5061\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab7e6011-8a56-4b7f-a7f2-1cdbc6c26b6f",
+              "name": "Invalid availability request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locale\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"location\": {\n    \"postal_code\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"services\": [\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ],\n  \"date_from\": \"<date>\",\n  \"date_to\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Subdomain issued to the partner during onboarding.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subdomain",
+      "key": "api_subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{api_subdomain}}.partner-platform.taskrabbit.com/2025-12",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://taskrabbit.auth0.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8db01837-7bfc-4512-b304-34599f5be986",
+    "name": "TaskRabbit Partner Delivery Home Services Availability API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "TaskRabbit's Partner API program, documented at developer.taskrabbit.com, spans two live surfaces: the Home Services Partner Platform (versioned 2025-12) covering the Estimate, Availability, Bid, Book project workflow plus catalog and cancellation/reschedule management, and the Delivery API inherited from Dolly (acquired by TaskRabbit in November 2024 and rebranded TaskRabbit Delivery). Both surfaces require partner approval and Auth0 OAuth2 client-credentials (machine-to-machine) tokens; there is no public self-serve signup. Endpoint shapes below are modeled from TaskRabbit's public developer documentation (method, path, and the parameters/fields the docs describe); exact request/response schemas are partially withheld behind the gated Postman collection and reference pages given to approved partners, so object schemas here are best-effort and marked accordingly rather than fabricated in full detail.\n\nContact Support:\n Name: TaskRabbit Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}

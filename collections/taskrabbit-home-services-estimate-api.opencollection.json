@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TaskRabbit Partner Delivery Home Services Estimate API",
+    "version": "2025-12"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://taskrabbit.auth0.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Home Services Estimate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Estimate Services",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/projects/estimate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns service eligibility and a price estimate for a given postal code or full address and one or more requested services. The first call in the Estimate, Availability, Bid, Book sequence."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

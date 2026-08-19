@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TaskRabbit Partner Delivery Home Services Catalog API",
+    "version": "2025-12"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://taskrabbit.auth0.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Home Services Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Services by Brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/brands/:brand_uuid/services",
+            "params": [
+              {
+                "name": "brand_uuid",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include_pricing",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "external_identifier",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves all services configured for a partner brand, including names, pricing, and requirements."
+        },
+        {
+          "info": {
+            "name": "Update Service External Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12/services/:service_uuid/external-identifier",
+            "params": [
+              {
+                "name": "service_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a service's partner-defined external identifier for catalog reconciliation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

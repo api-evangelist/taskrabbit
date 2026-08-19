@@ -1,0 +1,224 @@
+{
+  "item": [
+    {
+      "id": "85afc90a-c7ab-42cd-8c14-a36604a6bfe2",
+      "name": "Home Services Estimate",
+      "description": {
+        "content": "Pricing and eligibility estimation for Home Services projects.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c6a6d8af-ca1a-4142-9208-82937971e29e",
+          "name": "Estimate Services",
+          "request": {
+            "name": "Estimate Services",
+            "description": {
+              "content": "Returns service eligibility and a price estimate for a given postal code or full address and one or more requested services. The first call in the Estimate, Availability, Bid, Book sequence.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "projects",
+                "estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Subdomain issued to the partner during onboarding.",
+                  "type": "any",
+                  "value": "{{api_subdomain}}",
+                  "key": "api_subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"locale\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"location\": {\n    \"postal_code\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"services\": [\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06aceb7a-6645-4c4d-89a2-17dfe97954ef",
+              "name": "Estimated pricing for the requested services.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locale\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"location\": {\n    \"postal_code\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"services\": [\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"eligible\": false,\n  \"estimated_price_cents\": 1929\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "210b41f5-65ad-44cc-8c30-6a1d74554aca",
+              "name": "Invalid estimate request parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "projects",
+                    "estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Subdomain issued to the partner during onboarding.",
+                      "type": "any",
+                      "value": "{{api_subdomain}}",
+                      "key": "api_subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locale\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"location\": {\n    \"postal_code\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"services\": [\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"service_id\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Subdomain issued to the partner during onboarding.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-subdomain",
+      "key": "api_subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{api_subdomain}}.partner-platform.taskrabbit.com/2025-12",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://taskrabbit.auth0.com/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "03e3dd21-f8bb-40bc-af9d-b9d302293c90",
+    "name": "TaskRabbit Partner Delivery Home Services Estimate API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "TaskRabbit's Partner API program, documented at developer.taskrabbit.com, spans two live surfaces: the Home Services Partner Platform (versioned 2025-12) covering the Estimate, Availability, Bid, Book project workflow plus catalog and cancellation/reschedule management, and the Delivery API inherited from Dolly (acquired by TaskRabbit in November 2024 and rebranded TaskRabbit Delivery). Both surfaces require partner approval and Auth0 OAuth2 client-credentials (machine-to-machine) tokens; there is no public self-serve signup. Endpoint shapes below are modeled from TaskRabbit's public developer documentation (method, path, and the parameters/fields the docs describe); exact request/response schemas are partially withheld behind the gated Postman collection and reference pages given to approved partners, so object schemas here are best-effort and marked accordingly rather than fabricated in full detail.\n\nContact Support:\n Name: TaskRabbit Developer Hub",
+      "type": "text/plain"
+    }
+  }
+}
