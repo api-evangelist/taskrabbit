@@ -22,6 +22,18 @@ description: TaskRabbit is a gig-economy marketplace connecting customers with l
   per partner. End-customer pricing on TaskRabbit itself follows a standard
   Service Fee plus Trust & Support Fee structure layered on top of each Tasker's
   hourly rate.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
