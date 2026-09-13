@@ -1,0 +1,25 @@
+generated: '2026-09-11'
+method: probed
+source: https://mcp.taskrabbit.com/mcp
+status: published
+server:
+  name: taskrabbit
+  transport: http
+  url: https://mcp.taskrabbit.com/mcp
+deployment:
+  mode: remote
+  endpoint: https://mcp.taskrabbit.com/mcp
+  verified: probed
+  probe: live
+  checked: '2026-09-11'
+  source: docs-check 2026-09-11 (endpoint found in the provider's own documentation, then probed)
+tools_count: 3
+tools:
+- name: check_service_availability
+  description: ''
+- name: generate_deep_link
+  description: ''
+- name: list_supported_services
+  description: ''
+tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
+authorship: provider
