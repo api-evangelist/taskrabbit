@@ -1,0 +1,25 @@
+# Front Door AI Index — taskrabbit — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: taskrabbit
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.taskrabbit.com
+  final_host: www.taskrabbit.com
+  ownership: own
+  owner: taskrabbit
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 1
+  host_score: 1
+  density: 1.84
+  words: 544
+  tiers:
+    agentic: 1
+    core: 0
+    model: 0
+  ambiguous: 0
+  top_terms:
+    prompts: 1
