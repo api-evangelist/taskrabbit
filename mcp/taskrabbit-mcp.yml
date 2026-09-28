@@ -16,10 +16,14 @@ deployment:
 tools_count: 3
 tools:
 - name: check_service_availability
-  description: ''
+  description: Check availability, pricing, and scoping questions for a service in a location. Provide
+    either city + state OR postalCode to specify the location. When the response includes topTaskers,
+    render each tasker as a visual card (not a plain list
 - name: generate_deep_link
-  description: ''
+  description: Generate a pre-filled Taskrabbit booking deep link using task template ID.
 - name: list_supported_services
-  description: ''
+  description: List Taskrabbit services available in a location. Provide either city + state OR postalCode.
 tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
 authorship: provider
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28
