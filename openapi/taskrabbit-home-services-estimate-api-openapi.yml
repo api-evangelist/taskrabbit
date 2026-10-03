@@ -56,6 +56,14 @@ components:
           type: string
         address:
           type: string
+    ServiceItemRequest:
+      type: object
+      description: A requested service line item; exact field list beyond category/quantity is not published outside partner materials.
+      properties:
+        service_id:
+          type: string
+        quantity:
+          type: integer
     EstimateRequest:
       type: object
       required:
@@ -85,14 +93,6 @@ components:
         eligible:
           type: boolean
         estimated_price_cents:
-          type: integer
-    ServiceItemRequest:
-      type: object
-      description: A requested service line item; exact field list beyond category/quantity is not published outside partner materials.
-      properties:
-        service_id:
-          type: string
-        quantity:
           type: integer
   securitySchemes:
     oauth2:

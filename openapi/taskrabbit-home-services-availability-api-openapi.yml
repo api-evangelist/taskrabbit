@@ -56,6 +56,22 @@ components:
           type: string
         address:
           type: string
+    AvailabilityResponse:
+      type: object
+      properties:
+        windows:
+          type: array
+          items:
+            type: object
+            properties:
+              start_time:
+                type: string
+                format: date-time
+              end_time:
+                type: string
+                format: date-time
+              estimated_price_cents:
+                type: integer
     AvailabilityRequest:
       type: object
       required:
@@ -92,22 +108,6 @@ components:
           type: string
         quantity:
           type: integer
-    AvailabilityResponse:
-      type: object
-      properties:
-        windows:
-          type: array
-          items:
-            type: object
-            properties:
-              start_time:
-                type: string
-                format: date-time
-              end_time:
-                type: string
-                format: date-time
-              estimated_price_cents:
-                type: integer
   securitySchemes:
     oauth2:
       type: oauth2
