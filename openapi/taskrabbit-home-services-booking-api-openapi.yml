@@ -196,32 +196,6 @@ paths:
           description: Project rescheduled.
 components:
   schemas:
-    BidRequest:
-      type: object
-      required:
-      - locale
-      - currency
-      - location
-      - service_item_terms
-      - target_start_time
-      properties:
-        locale:
-          type: string
-          enum:
-          - en-US
-        currency:
-          type: string
-          enum:
-          - USD
-        location:
-          $ref: '#/components/schemas/Location'
-        service_item_terms:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceItemRequest'
-        target_start_time:
-          type: string
-          format: date-time
     BidResponse:
       type: object
       properties:
@@ -253,13 +227,6 @@ components:
           type: string
         agreement_accounting_reference:
           type: string
-    Location:
-      type: object
-      properties:
-        postal_code:
-          type: string
-        address:
-          type: string
     Project:
       type: object
       properties:
@@ -274,6 +241,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ServiceItemRequest'
+    BidRequest:
+      type: object
+      required:
+      - locale
+      - currency
+      - location
+      - service_item_terms
+      - target_start_time
+      properties:
+        locale:
+          type: string
+          enum:
+          - en-US
+        currency:
+          type: string
+          enum:
+          - USD
+        location:
+          $ref: '#/components/schemas/Location'
+        service_item_terms:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItemRequest'
+        target_start_time:
+          type: string
+          format: date-time
     ServiceItemRequest:
       type: object
       description: A requested service line item; exact field list beyond category/quantity is not published outside partner materials.
@@ -282,6 +275,13 @@ components:
           type: string
         quantity:
           type: integer
+    Location:
+      type: object
+      properties:
+        postal_code:
+          type: string
+        address:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2

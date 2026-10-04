@@ -49,13 +49,6 @@ paths:
           description: Invalid availability request.
 components:
   schemas:
-    Location:
-      type: object
-      properties:
-        postal_code:
-          type: string
-        address:
-          type: string
     AvailabilityResponse:
       type: object
       properties:
@@ -108,6 +101,13 @@ components:
           type: string
         quantity:
           type: integer
+    Location:
+      type: object
+      properties:
+        postal_code:
+          type: string
+        address:
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2
