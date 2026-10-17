@@ -227,20 +227,6 @@ components:
           type: string
         agreement_accounting_reference:
           type: string
-    Project:
-      type: object
-      properties:
-        project_uuid:
-          type: string
-          format: uuid
-        status:
-          type: string
-        location:
-          $ref: '#/components/schemas/Location'
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceItemRequest'
     BidRequest:
       type: object
       required:
@@ -267,6 +253,27 @@ components:
         target_start_time:
           type: string
           format: date-time
+    Location:
+      type: object
+      properties:
+        postal_code:
+          type: string
+        address:
+          type: string
+    Project:
+      type: object
+      properties:
+        project_uuid:
+          type: string
+          format: uuid
+        status:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItemRequest'
     ServiceItemRequest:
       type: object
       description: A requested service line item; exact field list beyond category/quantity is not published outside partner materials.
@@ -275,13 +282,6 @@ components:
           type: string
         quantity:
           type: integer
-    Location:
-      type: object
-      properties:
-        postal_code:
-          type: string
-        address:
-          type: string
   securitySchemes:
     oauth2:
       type: oauth2
