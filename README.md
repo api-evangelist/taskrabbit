@@ -1,4 +1,4 @@
-# TaskRabbit (taskrabbit)
+# TaskRabbit
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,116 +64,126 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-TaskRabbit is a gig-economy marketplace connecting customers with local, vetted Taskers for furniture assembly, handyman work, moving, and other home services. Ingka Group (IKEA) acquired TaskRabbit outright in September 2017 and has since deepened the integration, including in-store and checkout-time TaskRabbit assembly booking at IKEA.
+TaskRabbit is a gig-economy marketplace connecting customers with local, vetted Taskers for furniture assembly, handyman work, moving, and other home services. Ingka Group (IKEA) acquired TaskRabbit in 2017 and has since deepened the integration, including in-store and checkout-time TaskRabbit assembly booking at IKEA. TaskRabbit's original developer story dates to February 2012, when it ran an open API that let third-party to-do apps (Astrid, Producteev) create tasks on a user's behalf; that early open, self-serve API is long gone. In November 2024 TaskRabbit acquired on-demand delivery company Dolly and rebranded its service as TaskRabbit Delivery. Today TaskRabbit operates one gated Partner API program (developer.taskrabbit.com) spanning two live surfaces - Delivery (built on Dolly's pre-existing Partner API, "PAPI") and a newer, 2025-12-versioned Home Services Partner Platform (Estimate, Availability, Bid, Book) that lets approved partners quote, book, and manage TaskRabbit projects, including IKEA-style furniture assembly, inside their own apps. Access requires partner approval (TaskRabbit reviews requests within about two business days) and Auth0 OAuth2 client-credentials (machine-to-machine) tokens; there is no public self-serve signup and no published API price list, since commercial terms are negotiated per partner. End-customer pricing on TaskRabbit itself follows a standard Service Fee plus Trust & Support Fee structure layered on top of each Tasker's hourly rate.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/taskrabbit/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/taskrabbit/refs/heads/main/apis.yml)
+**Areas:** Gig Economy · Handyman · Home Services · Marketplace · Delivery · Moving · Partner API · IKEA
 
-## API Status
+## TaskRabbit on APIs.io
 
-TaskRabbit's developer story is not a single, continuous line - it has an open past and a gated present:
+Everything profiled for TaskRabbit is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/taskrabbit/](https://apis.io/providers/taskrabbit/)** — or go straight to one of the APIs or properties below.
 
-- **2012 - open developer API (defunct).** In February 2012 TaskRabbit launched a self-serve, publicly documented API that let third-party to-do-list apps (Astrid, Producteev) and other integrators create TaskRabbit tasks on a consumer's behalf. That original open API no longer exists; there is no public self-serve developer signup on taskrabbit.com today.
-- **2017 - IKEA acquisition.** Ingka Group (IKEA) acquired TaskRabbit, and the company's developer priorities shifted toward retail/marketplace integration partners rather than hobbyist consumer apps.
-- **2024 - Dolly acquisition.** TaskRabbit acquired on-demand delivery company Dolly in November 2024 and rebranded its service as TaskRabbit Delivery. Dolly's existing Partner API (PAPI) continues to power that surface.
-- **Today - one gated Partner API program.** developer.taskrabbit.com hosts a single Developer Hub covering two live REST surfaces: **Delivery** (Dolly-derived, mature) and **Home Services** (a newer, 2025-12-versioned Partner Platform covering Estimate, Availability, Bid, Book). The top-level overview page still tags Home Services "(coming soon!)," but individual endpoint pages describe it as available in both Sandbox and Production - that top-level copy looks stale relative to the endpoint docs. Access to either surface requires partner approval (TaskRabbit says it typically reviews requests within about two business days) and Auth0 OAuth2 client-credentials (machine-to-machine) tokens. There is no public self-serve signup and no published API price list; commercial terms are negotiated per partner.
+### APIs (5)
 
-See [review.yml](review.yml) for the full sourced findings, including confirmed endpoint paths and why no AsyncAPI document was created (TaskRabbit's event notifications are HTTP POST webhooks, not WebSocket or SSE).
+- [TaskRabbit Delivery API](https://apis.io/apis/taskrabbit/taskrabbit-delivery-api/) — Dolly-based on-demand delivery, quoting, and routing.
+- [TaskRabbit Home Services Availability API](https://apis.io/apis/taskrabbit/taskrabbit-home-services-availability-api/) — Real-time bookable time windows for Home Services projects.
+- [TaskRabbit Home Services Booking API](https://apis.io/apis/taskrabbit/taskrabbit-home-services-booking-api/) — Bid, book, retrieve, cancel, and reschedule Home Services projects.
+- [TaskRabbit Home Services Catalog API](https://apis.io/apis/taskrabbit/taskrabbit-home-services-catalog-api/) — Partner brand service catalog for Home Services.
+- [TaskRabbit Home Services Estimate API](https://apis.io/apis/taskrabbit/taskrabbit-home-services-estimate-api/) — Pricing and eligibility estimation for Home Services projects.
 
-## Tags
+### Published properties
 
-- Gig Economy
-- Handyman
-- Home Services
-- Marketplace
-- Delivery
-- Moving
-- Partner API
-- IKEA
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Timestamps
+#### MCP servers (1)
 
-- **Created:** 2026-07-03
-- **Modified:** 2026-07-03
+Model Context Protocol servers that expose the API to agents.
 
-## APIs
+- [taskrabbit](https://apis.io/servers/taskrabbit/taskrabbit/)
 
-### TaskRabbit Home Services Estimate API
+#### Agentic access (1)
 
-POST `/projects/estimate` is the first call in the Estimate, Availability, Bid, Book booking sequence - it returns service eligibility and a price estimate for a postal code or full address plus one or more requested services.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://developer.taskrabbit.com/docs/project-estimate](https://developer.taskrabbit.com/docs/project-estimate)
-- **Base URL:** `https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12`
+- [Taskrabbit Agentic Access](https://apis.io/agentic-access/taskrabbit/taskrabbit-agentic-access/)
 
-#### Properties
+#### Collections (5)
 
-- [Documentation](https://developer.taskrabbit.com/docs/overview-taskrabbit-home-services-api)
-- [API Reference](https://developer.taskrabbit.com/reference/projectestimate)
-- [OpenAPI](openapi/taskrabbit-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+Postman and Open Collection request collections.
 
-### TaskRabbit Home Services Availability API
+- [TaskRabbit Partner Delivery API](https://apis.io/collections/taskrabbit/open-taskrabbit-delivery-api/)
+- [TaskRabbit Partner Delivery Home Services Availability API](https://apis.io/collections/taskrabbit/open-taskrabbit-home-services-availability-api/)
+- [TaskRabbit Partner Delivery Home Services Booking API](https://apis.io/collections/taskrabbit/open-taskrabbit-home-services-booking-api/)
+- [TaskRabbit Partner Delivery Home Services Catalog API](https://apis.io/collections/taskrabbit/open-taskrabbit-home-services-catalog-api/)
+- [TaskRabbit Partner Delivery Home Services Estimate API](https://apis.io/collections/taskrabbit/open-taskrabbit-home-services-estimate-api/)
 
-POST `/projects/availability` returns real-time bookable time windows and estimated pricing for one or more services at a location.
+#### Security (2)
 
-- **Human URL:** [https://developer.taskrabbit.com/docs/checking-availability](https://developer.taskrabbit.com/docs/checking-availability)
-- **Base URL:** `https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12`
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Taskrabbit Authentication](https://apis.io/security/taskrabbit/taskrabbit-authentication/)
+- [Taskrabbit Domain Security](https://apis.io/security/taskrabbit/taskrabbit-domain-security/)
 
-- [API Reference](https://developer.taskrabbit.com/reference/projectavailability)
-- [OpenAPI](openapi/taskrabbit-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+#### OAuth scopes (1)
 
-### TaskRabbit Home Services Booking API
+The permissions the API asks for.
 
-POST `/projects/bid` locks a formal quote and Project UUID against a chosen time window, POST `/projects/book` completes the booking, GET `/projects/{project_uuid}` and POST `/projects/list` check status, POST `/projects/{project_uuid}/cancel` cancels with an enumerated reason, and a reschedule-availability/reschedule pair moves a booked project. `project.completed`, `project.canceled`, and `project.rescheduled` events are pushed as Svix-signed HTTP POST webhooks.
+- [Taskrabbit Scopes](https://apis.io/scopes/taskrabbit/taskrabbit-scopes/)
 
-- **Human URL:** [https://developer.taskrabbit.com/docs/booking-a-project](https://developer.taskrabbit.com/docs/booking-a-project)
-- **Base URL:** `https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12`
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [API Reference: Bid](https://developer.taskrabbit.com/reference/projectbid)
-- [API Reference: Book](https://developer.taskrabbit.com/reference/projectbook)
-- [API Reference: Get Project](https://developer.taskrabbit.com/reference/getprojectbyuuid)
-- [API Reference: Cancel](https://developer.taskrabbit.com/reference/cancelbookedproject)
-- [Webhooks](https://developer.taskrabbit.com/docs/webhooks-1)
-- [OpenAPI](openapi/taskrabbit-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Taskrabbit Plans Pricing](https://apis.io/plans/taskrabbit/taskrabbit-plans-pricing/)
 
-### TaskRabbit Home Services Catalog API
+## Where to find this API
 
-GET `/brands/{brand_uuid}/services` returns a partner brand's full configured service catalog - names, pricing, and requirements. PUT updates a service's partner-defined external identifier for catalog reconciliation.
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- **Human URL:** [https://developer.taskrabbit.com/docs/get-service-catalog](https://developer.taskrabbit.com/docs/get-service-catalog)
-- **Base URL:** `https://{api_subdomain}.partner-platform.taskrabbit.com/2025-12`
-
-#### Properties
-
-- [API Reference: List Services](https://developer.taskrabbit.com/reference/listservicesbybranduuid)
-- [API Reference: Update External Identifier](https://developer.taskrabbit.com/reference/updateserviceexternalidentifier)
-- [OpenAPI](openapi/taskrabbit-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-### TaskRabbit Delivery API (Dolly)
-
-TaskRabbit acquired on-demand moving/delivery company Dolly in November 2024 and rebranded its service TaskRabbit Delivery; the pre-existing Dolly Partner API (PAPI) continues to power it. POST `/deliveries` quotes and creates a delivery, with companion endpoints for delivery info, units, tips, cancellation, routing, partner identity, and health checks. Courier lifecycle events (`COURIER_REQUESTED` through `DELIVERED`) are pushed as HTTP POST webhooks from an allowlisted set of source IPs.
-
-- **Human URL:** [https://developer.taskrabbit.com/docs/overview](https://developer.taskrabbit.com/docs/overview)
-- **Base URL:** `https://papi.dolly.com/v1` (Production) / `https://papi.sandbox.dolly.com/v1` (Sandbox)
-
-#### Properties
-
-- [Quoting Deliveries](https://developer.taskrabbit.com/docs/requesting-delivery-quotes)
-- [Scheduling Deliveries](https://developer.taskrabbit.com/docs/scheduling)
-- [Webhooks](https://developer.taskrabbit.com/docs/webhooks)
-- [API Reference: Get Partner Info](https://developer.taskrabbit.com/reference/get-partner-information)
-- [OpenAPI](openapi/taskrabbit-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/taskrabbit)
 - [Website](https://www.taskrabbit.com)
 - [Documentation](https://developer.taskrabbit.com/)
-- [Plans](plans/taskrabbit-plans-pricing.yml)
+- [Blog](https://www.taskrabbit.com/blog/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 25.7** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 47.3 |
+| Contract governance | 0.0 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 7.9 |
+
+**Agent readiness 33.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 21.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/taskrabbit/](https://apis.io/providers/taskrabbit/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for TaskRabbit: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/taskrabbit/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
